@@ -17,7 +17,7 @@ screen.splitH()
 screen.exec('couchdb')
 screen.new()
 screen.exec('grunt watch')
-``
+```
 
 ## API
 
