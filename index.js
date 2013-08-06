@@ -33,6 +33,7 @@ function ScreenInit(opts) {
     name: this.name,
     cols: this.cols,
     rows: this.rows,
+    cwd: this.cwd,
     env: this.env
   })
 
