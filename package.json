@@ -1,0 +1,26 @@
+{
+  "name": "screen-init",
+  "version": "0.1.0",
+  "description": "quickly initialize screen sessions",
+  "main": "index.js",
+  "dependencies": {
+    "pty.js": "~0.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sfrdmn/node-screen-init"
+  },
+  "keywords": [
+    "gnu",
+    "screen"
+  ],
+  "author": "Sean Fridman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sfrdmn/node-screen-init/issues"
+  }
+}
