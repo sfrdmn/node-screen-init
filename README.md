@@ -41,7 +41,7 @@ Useful if you have custom bindings. `pty.js` options are passed through
   UTF8 equivalent of screen meta key
   + **bindings**
   UTF8 key bindings for screen commands. Defaults:
-  ```Javascript
+  ```
   {
     'split': 'S',
     'split-v': '|',
