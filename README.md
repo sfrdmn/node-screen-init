@@ -15,18 +15,18 @@ var screen = require('screen-init')()
 screen.exec('Python -m SimpleHTTPServer')
 screen.splitH()
 screen.exec('couchdb')
-screen.new()
+screen.newScreen()
 screen.exec('grunt watch')
 ```
 
 ## API
 
-new, splitH, and splitV calls automatically focus the newly created screen.
+newScreen, splitH, and splitV calls automatically focus the newly created screen.
 calls to exec are run on whichever screen has focus
 
 + **exec**
 Takes a string and writes it as input to the currently focused screen.
-+ **new**
++ **newScreen**
 Creates a new screen and focuses it.
 + **splitH**
 Creates a new screen in a horizontal split and focuses it.
