@@ -61,7 +61,7 @@ ScreenInit.prototype.splitV = function() {
   this.screenCommand_('splitV')
 }
 
-ScreenInit.prototype.screen = function() {
+ScreenInit.prototype.new = function() {
   this.screenCommand_('screen')
 }
 
