@@ -1,6 +1,6 @@
 {
   "name": "screen-init",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "quickly initialize screen sessions",
   "main": "index.js",
   "dependencies": {

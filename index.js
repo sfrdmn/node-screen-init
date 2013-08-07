@@ -7,13 +7,24 @@ var bindings = {
   'split-v': '|',
   'focus': '\t',
   'screen': 'c',
-  'fit': 'F'
+  'fit': 'F',
+  'title': 'A'
 }
 var commands = {
   'splitH': ['split', 'focus', 'screen'],
   'splitV': ['split-v', 'focus', 'screen'],
   'screen': ['screen'],
+  'title': ['title'],
   'fit': ['fit']
+}
+var termBindings = {
+  'return': '\r',
+  'backspace': '\b'
+}
+var termCommands = {
+  'clearLine': range(64).map(function() {
+    return termBindings.backspace
+  }).join('')
 }
 
 function ScreenInit(opts) {
@@ -49,8 +60,10 @@ function ScreenInit(opts) {
   })
 }
 
-ScreenInit.prototype.exec = function(cmd) {
-  this.termCommand_(cmd)
+ScreenInit.prototype.exec = function(cmd, title) {
+  title = title || cmd
+  this.writeCommand_(cmd)
+  this.title(title)
 }
 
 ScreenInit.prototype.splitH = function() {
@@ -65,17 +78,37 @@ ScreenInit.prototype.newScreen = function() {
   this.screenCommand_('screen')
 }
 
+ScreenInit.prototype.title = function(title) {
+  if (typeof title === 'string' && title.length) {
+    this.screenCommand_('title')
+    this.termCommand_('clearLine')
+    this.writeCommand_(title)
+  }
+}
+
+ScreenInit.prototype.write_ = function(input) {
+  if (typeof input === 'string' && input.length) {
+    this.screen.stdin.write(input)
+  }
+}
+
+ScreenInit.prototype.writeCommand_ = function(cmd) {
+  // raw mode off so input isn't sitting in buffer somewhere?
+  // not sure, prevents leftover output when screen terminates
+  process.stdin.setRawMode(false)
+  this.write_(cmd + termBindings.return)
+  process.stdin.setRawMode(true)
+}
+
 ScreenInit.prototype.screenCommand_ = function(cmdName) {
   var bindings = commands[cmdName] || []
   bindings.forEach(function(key) {
-    this.screen.stdin.write(this.meta + this.bindings[key])
+    this.write_(this.meta + this.bindings[key])
   }.bind(this))
 }
 
-ScreenInit.prototype.termCommand_ = function(cmd) {
-  if (typeof cmd === 'string' && cmd.length) {
-    this.screen.stdin.write(cmd + '\r')
-  }
+ScreenInit.prototype.termCommand_ = function(cmdName) {
+  this.write_(termCommands[cmdName])
 }
 
 ScreenInit.prototype.onResize_ = function() {
@@ -138,6 +171,22 @@ function throttle(fn, ms) {
       }
     }
   }
+}
+
+function range(start, end) {
+  var arr = []
+  if (typeof start !== 'undefined' && typeof end === 'undefined') {
+    end = start - 1
+    start = 0
+  }
+  if (typeof start !== 'undefined' && typeof end !== 'undefined' && start <= end) {
+    for (var i = start; i <= end; i++) {
+      (function(i) {
+        arr.push(i)
+      })(i)
+    }
+  }
+  return arr
 }
 
 module.exports = function(opts) {

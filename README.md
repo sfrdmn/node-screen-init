@@ -24,14 +24,18 @@ screen.exec('grunt watch')
 newScreen, splitH, and splitV calls automatically focus the newly created screen.
 calls to exec are run on whichever screen has focus
 
-+ **exec**
++ **screen.exec**
 Takes a string and writes it as input to the currently focused screen.
-+ **newScreen**
+Optionally, takes a second parameter specifying the title of the screen,
+defaulting to the name of the command itself.
++ **screen.newScreen**
 Creates a new screen and focuses it.
-+ **splitH**
++ **screen.splitH**
 Creates a new screen in a horizontal split and focuses it.
-+ **splitV**
++ **screen.splitV**
 Same as `splitH`, but creates a vertical split. **Note** Older versions of screen do not have this capability!
++ **screen.title**
+Sets the title of the screen
 + **options**
 Custom options can be easily supplied when required using `require('screen-init')({options: stuff})`.
 Useful if you have custom bindings. `pty.js` options are passed through
@@ -47,6 +51,7 @@ Useful if you have custom bindings. `pty.js` options are passed through
     'split-v': '|',
     'focus': '\t',
     'screen': 'c',
-    'fit': 'F'
+    'fit': 'F',
+    'title: 'A'
   }
   ```
